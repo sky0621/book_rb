@@ -1,8 +1,4 @@
 
-pp ARGV
-
-pp ARGV.count
-
 if ARGV.count < 1
   msg = <<-EOB
 book
@@ -16,5 +12,14 @@ get    ... keyを渡してvalueを表示します。
 remove ... keyを渡してvalueを削除します。
 help   ... ヘルプ情報（当内容と同じ）を表示します。
   EOB
-puts msg
+  puts msg
+  return
+end
+
+subCommand = ARGV[0]
+pp subCommand
+
+if subCommand == "save"
+
+  return
 end
