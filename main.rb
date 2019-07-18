@@ -39,6 +39,7 @@ if ARGV.count < 1
       usage()
     end
 
+    # 以降は、引数ありコマンドの処理
     cmds = cmd.split(" ")
     if cmds.length < 1
       usage
@@ -52,9 +53,38 @@ if ARGV.count < 1
         next
       end
       cmd_store[cmds[1]] = cmds[2]
-      pp cmd_store
       next
     end
+
+    # 取得
+    if cmds[0] === "get"
+      if cmds.length != 2
+        usage()
+        next
+      end
+      puts cmd_store[cmds[1]]
+      next
+    end
+
+    # 削除
+    if cmds[0] === "remove"
+      if cmds.length != 2
+        usage()
+        next
+      end
+      cmd_store.delete(cmds[1])
+      next
+    end
+
+    # 一覧
+    if cmds[0] === "list"
+      puts "\"key\",\"value\""
+      cmd_store.each {|k, v|
+        puts "\"" + k + "\",\"" + v + "\""
+      }
+      next
+    end
+
   end
 end
 

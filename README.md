@@ -18,68 +18,43 @@ $ book
 
 ### アプリ終了
 <pre>
-# end
+end
 
 $
 </pre>
 
 ### ヘルプ
 <pre>
-# help
+help
 
   *show help
 </pre>
 
 ### 保存
 <pre>
-# save key01 val01
+save key01 val01
 
 </pre>
 
 ### 取得
 <pre>
-# get key01
+get key01
 
 val01
 </pre>
 
 ### 削除
 <pre>
-# remove key01
-#
-# get key01
+remove key01
 
 </pre>
 
 ### 一覧表示
 <pre>
-# list
-
-key          value
-memo         This is a memo.
-ToDo         get up at 6
-Today's Menu xxxx
-</pre>
-
-### CSV形式で一覧表示
-<pre>
-# list -t csv
+list
 
 "key","value"
-"memo","This is a memo."
-"ToDo","get up at 6"
-"Today's Menu","xxxx"
-</pre>
-
-### 出力先指定で一覧表示
-<pre>
-# list -o output.txt
-#
-# end
-$ cat output.txt
-
-key          value
-memo         This is a memo.
-ToDo         get up at 6
-Today's Menu xxxx
+"key01","val01"
+"11111","22222"
+"キー","バリュー"
 </pre>
