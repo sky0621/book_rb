@@ -1,19 +1,18 @@
 
 def usage()
-  msg = <<-EOB
+  puts <<~EOB
 
-[usage]
-キーバリュー形式で文字列情報を管理するコマンドです。
-以下のサブコマンドが利用可能です。
+    [usage]
+    キーバリュー形式で文字列情報を管理するコマンドです。
+    以下のサブコマンドが利用可能です。
 
-list   ... 保存済みの内容を一覧表示します。
-save   ... keyとvalueを渡して保存します。
-get    ... keyを渡してvalueを表示します。
-remove ... keyを渡してvalueを削除します。
-help   ... ヘルプ情報（当内容と同じ）を表示します。
+    list   ... 保存済みの内容を一覧表示します。
+    save   ... keyとvalueを渡して保存します。
+    get    ... keyを渡してvalueを表示します。
+    remove ... keyを渡してvalueを削除します。
+    help   ... ヘルプ情報（当内容と同じ）を表示します。
 
   EOB
-  puts msg
 end
 
 # -------------------------------------------------------------------
@@ -22,75 +21,53 @@ end
 
 cmd_store = Hash.new
 
-if ARGV.count < 1
-  pp "Start!"
-  loop do
-    # 改行コードが含まれるので削る。
-    cmd = gets.chomp!
+puts "Start!"
 
-    # アプリ終了判定
-    if cmd === "end"
-      puts "End!"
-      exit
-    end
+loop do
+  # 改行コードが含まれるので削る。
+  cmd, *args = gets.chomp.split /\s+/
 
-    # ヘルプ
-    if cmd === "help"
-      usage()
-    end
+  case cmd
 
-    # 以降は、引数ありコマンドの処理
-    cmds = cmd.split(" ")
-    if cmds.length < 1
+  # アプリ終了判定
+  when "end"
+    puts "End!"
+    exit
+
+  # ヘルプ
+  when "help"
+    usage
+    next
+
+  # 保存
+  when "save"
+    if args.size == 2
+      cmd_store[args[0]] = args[1]
+    else
       usage
-      next
     end
 
-    # 保存
-    if cmds[0] === "save"
-      if cmds.length != 3
-        usage()
-        next
-      end
-      cmd_store[cmds[1]] = cmds[2]
-      next
+  # 取得
+  when "get"
+    if args.size == 1
+      puts cmd_store[args[0]]
+    else
+      usage
     end
 
-    # 取得
-    if cmds[0] === "get"
-      if cmds.length != 2
-        usage()
-        next
-      end
-      puts cmd_store[cmds[1]]
-      next
+  # 削除
+  when "remove"
+    if args.size == 1
+      cmd_store.delete(args[0])
+    else
+      usage
     end
 
-    # 削除
-    if cmds[0] === "remove"
-      if cmds.length != 2
-        usage()
-        next
-      end
-      cmd_store.delete(cmds[1])
-      next
-    end
-
-    # 一覧
-    if cmds[0] === "list"
-      puts "\"key\",\"value\""
-      cmd_store.each {|k, v|
-        puts "\"" + k + "\",\"" + v + "\""
-      }
-      next
-    end
+  # 一覧
+  when "list"
+    puts '"key","value"'
+    cmd_store.each {|k, v| puts %("#{k}","#{v}")}
 
   end
-end
 
-subCommand = ARGV[0]
-
-if subCommand == "help"
-  usage
-  return
 end
