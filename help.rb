@@ -1,5 +1,7 @@
+require './command'
+
 class Help < Command
-  def exec()
+  def exec(*args)
     puts <<~EOB
 
     [usage]
