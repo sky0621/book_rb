@@ -1,12 +1,12 @@
 require './command'
 
-class Save < Command
+class Remove < Command
   def initialize(storeInfo)
     @storeInfo = storeInfo
   end
 
   def exec(*args)
-    if args.size != 2
+    if args.size != 1
       puts "not valid"
       return
     end
@@ -15,7 +15,7 @@ class Save < Command
       JSON.load(io)
     end
 
-    json_data[args[0]] = args[1]
+    json_data.delete(args[0])
 
     open(@storeInfo.getName, 'w') do |io|
       JSON.dump(json_data, io)

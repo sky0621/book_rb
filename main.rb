@@ -1,15 +1,27 @@
 # main.rbと同階層にあるファイルを読む時は「./」で始める。
-require './persistence'
+require './store_info'
+require './end'
+require './help'
+require './clear'
 require './save'
 require './get'
+require './remove'
 
 puts "Start!"
 
-p = Persistence.new('store2.json')
+storeInfo = StoreInfo.new('store.json')
 commands = {
-    "save" => Save.new(p),
-    "get"  => Get.new(p)
+    "end" => End.new,
+    "help" => Help.new,
+    "clear" => Clear.new(storeInfo),
+    "save" => Save.new(storeInfo),
+    "get" => Get.new(storeInfo),
+    "remove" => Remove.new(storeInfo),
 }
+
+if !File.exists?(storeInfo.getName)
+  commands["clear"].exec
+end
 
 loop do
   # 改行コードが含まれるので削る。
@@ -18,35 +30,6 @@ loop do
   commands[cmd].exec(*args)
 
   # case cmd
-  #
-  # # アプリ終了判定
-  # when "end"
-  #   puts "End!"
-  #   exit
-  #
-  # # 保存
-  # when "save"
-  #   if args.size == 2
-  #     cmd_store[args[0]] = args[1]
-  #   else
-  #     usage
-  #   end
-  #
-  # # 取得
-  # when "get"
-  #   if args.size == 1
-  #     puts cmd_store[args[0]]
-  #   else
-  #     usage
-  #   end
-  #
-  # # 削除
-  # when "remove"
-  #   if args.size == 1
-  #     cmd_store.delete(args[0])
-  #   else
-  #     usage
-  #   end
   #
   # # 一覧
   # when "list"

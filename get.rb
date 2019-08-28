@@ -1,8 +1,8 @@
 require './command'
 
 class Get < Command
-  def initialize(persistence)
-    @persistence = persistence
+  def initialize(storeInfo)
+    @storeInfo = storeInfo
   end
 
   def exec(*args)
@@ -10,6 +10,11 @@ class Get < Command
       puts "not valid"
       return
     end
-    @persistence.get(args[0])
+
+    json_data = open(@storeInfo.getName, 'r') do |io|
+      JSON.load(io)
+    end
+
+    puts json_data[args[0]]
   end
 end
