@@ -1,14 +1,15 @@
 require 'json'
 require './command'
+require './store'
 
 class Clear < Command
+  include Store
+  
   def initialize(storeInfo)
     @storeInfo = storeInfo
   end
 
   def exec(*args)
-    open(@storeInfo.getName, 'w') do |io|
-      JSON.dump(Hash.new, io)
-    end
+    dump(Hash.new)
   end
 end

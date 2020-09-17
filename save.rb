@@ -1,6 +1,9 @@
 require './command'
+require './store'
 
 class Save < Command
+  include Store
+
   def initialize(storeInfo)
     @storeInfo = storeInfo
   end
@@ -11,14 +14,8 @@ class Save < Command
       return
     end
 
-    json_data = open(@storeInfo.getName, 'r') do |io|
-      JSON.load(io)
-    end
-
+    json_data = load
     json_data[args[0]] = args[1]
-
-    open(@storeInfo.getName, 'w') do |io|
-      JSON.dump(json_data, io)
-    end
+    dump(json_data)
   end
 end

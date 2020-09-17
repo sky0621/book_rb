@@ -1,6 +1,9 @@
 require './command'
+require './store'
 
 class Get < Command
+  include Store
+
   def initialize(storeInfo)
     @storeInfo = storeInfo
   end
@@ -11,10 +14,6 @@ class Get < Command
       return
     end
 
-    json_data = open(@storeInfo.getName, 'r') do |io|
-      JSON.load(io)
-    end
-
-    puts json_data[args[0]]
+    puts load[args[0]]
   end
 end
