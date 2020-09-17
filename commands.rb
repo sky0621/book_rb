@@ -1,5 +1,5 @@
 # 同階層にあるファイルを読む時は「./」で始める。
-require './store_info'
+require './store'
 require './end'
 require './help'
 require './clear'
